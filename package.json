@@ -1,0 +1,39 @@
+{
+  "name": "start",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@heroicons/react": "^2.2.0",
+    "@hookform/resolvers": "^3.9.0",
+    "@mui/material": "^7.0.2",
+    "@next/font": "^14.2.15",
+    "@tanstack/react-query": "^5.59.14",
+    "@tanstack/react-query-devtools": "^5.59.14",
+    "axios": "^1.7.5",
+    "classnames": "^2.5.1",
+    "next": "^15.2.4",
+    "query-string": "^9.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.53.0",
+    "react-hot-toast": "^2.4.1",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "22.15.3",
+    "@types/react": "19.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
