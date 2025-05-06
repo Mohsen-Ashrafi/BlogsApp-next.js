@@ -1,5 +1,5 @@
 "use client";
-import useMoveBack from "@/hooks/useMoveBack";
+import useMoveBack from "./../hooks/useMoveBack";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button } from "@mui/material";
 
@@ -10,9 +10,9 @@ function NotFound() {
       <div className="container xl:max-w-screen-xl">
         <div className="flex justify-center pt-10">
           <div>
-            <h1 className="text-xl font-bold text-secondary-700 mb-8">
+            <p className="text-xl font-bold text-secondary-700 mb-8">
               The page you were looking for was not found.
-            </h1>
+            </p>
             <Button
               variant="contained"
               onClick={moveBack}
