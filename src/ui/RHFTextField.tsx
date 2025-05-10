@@ -15,6 +15,7 @@ type RHFTextFieldProps<T extends FieldValues> = {
   errors?: FieldErrors<T>;
   validationSchema?: Record<string, unknown>;
   className?: string;
+  isRequired?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default function RHFTextField<T extends FieldValues>({
@@ -24,6 +25,7 @@ export default function RHFTextField<T extends FieldValues>({
   dir = "rtl",
   register,
   errors,
+  isRequired,
   validationSchema = {},
   ...rest
 }: RHFTextFieldProps<T>) {
@@ -35,6 +37,7 @@ export default function RHFTextField<T extends FieldValues>({
     >
       <label htmlFor={name as string} className="mb-2 block text-secondary-700">
         {label}
+        {isRequired && <span className="text-error ml-2">*</span>}
       </label>
       <input
         autoComplete="off"

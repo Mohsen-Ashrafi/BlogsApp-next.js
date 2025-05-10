@@ -51,6 +51,5 @@ async function SinglePost({ params }: Params) {
 
 export default SinglePost;
 
-// ta avale 75  khonde shod
-// moshkeli ke dari safe signup o peyda nemikone :))) khande dare dorostesh kon
-// befrestesh github chat GBT baresish kone
+
+

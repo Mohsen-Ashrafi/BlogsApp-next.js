@@ -1,30 +1,24 @@
 "use client";
+import Button from "@/ui/Button";
 import RHFTextField from "@/ui/RHFTextField";
 import { useForm } from "react-hook-form";
-import Button from "@/ui/Button";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAuth } from "@/context/AuthContext";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import Loading from "@/ui/Loading";
+import { useAuth } from "@/context/AuthContext";
 
 // export const metadata = {
 //   title: "Signup",
 // };
 
 const schema = yup.object({
-  name: yup
-    .string()
-    .min(5, "Name is invalid.")
-    .max(30)
-    .required("Name is required"),
   email: yup.string().email("Email is invalid.").required("Email is required"),
   password: yup.string().required("Password is required"),
 });
 
 type FormValues = yup.InferType<typeof schema>;
 
-function Signup() {
+function Signin() {
   const {
     register,
     handleSubmit,
@@ -34,7 +28,7 @@ function Signup() {
     mode: "onTouched",
   });
 
-  const { signup } = useAuth();
+  const { signin } = useAuth();
 
   const onSubmit = async (values: unknown) => {
     const typedValues = values as {
@@ -42,23 +36,14 @@ function Signup() {
       email: string;
       password: string;
     };
-    await signup(typedValues);
+    await signin(typedValues);
   };
-
   return (
     <div>
-      <h1 className="text-xl font-bold text-secondary-500 text-center mb-6 -mt-16">
-        Signup
+      <h1 className="text-xl font-bold text-secondary-500 text-center mb-6">
+        Signin
       </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <RHFTextField<FormValues>
-          label="First and Last Name"
-          name="name"
-          register={register}
-          errors={errors}
-          dir="ltr"
-          isRequired
-        />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
         <RHFTextField<FormValues>
           label="Email"
           name="email"
@@ -76,26 +61,15 @@ function Signup() {
           dir="ltr"
           isRequired
         />
-        <div>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Button type="submit" variantType="primary" className="w-full">
-              Confirm
-            </Button>
-          )}
-        </div>
+        <Button type="submit" variantType="primary" className="w-full">
+          Login
+        </Button>
       </form>
-      <Link
-        href="/signin"
-        className="text-secondary-0 bg-blue-500 p-3 rounded-xl mt-6 text-center
-      hover:bg-blue-400 transition-all duration-300
-      "
-      >
-        Signin
+      <Link href="/signup" className="text-secondary-500 mt-6 text-center">
+        Signup
       </Link>
     </div>
   );
 }
 
-export default Signup;
+export default Signin;
