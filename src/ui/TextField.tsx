@@ -23,7 +23,7 @@ function TextField({
 }: TextFieldProps) {
   return (
     <div className="textField">
-      <label htmlFor={name} className="text-secondary-600 text-sm">
+      <label htmlFor={name} className="text-secondary-600 text-sm mb-2 block">
         {label}
         {isRequired && <span className="text-error">*</span>}
       </label>

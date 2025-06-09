@@ -1,13 +1,13 @@
 "use client";
 import { Button } from "@mui/material";
-import { JSX } from "react";
+import { FC } from "react";
 
 interface ErrorProps {
   error: Error;
   reset: () => void;
 }
 
-function Error({ error, reset }: ErrorProps): JSX.Element {
+const Error: FC<ErrorProps> = ({ error, reset }) => {
   return (
     <div className="container xl:max-w-screen-xl">
       <div className="flex justify-center pt-10">
@@ -24,5 +24,5 @@ function Error({ error, reset }: ErrorProps): JSX.Element {
       </div>
     </div>
   );
-}
+};
 export default Error;

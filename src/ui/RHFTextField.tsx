@@ -1,60 +1,65 @@
+"use client";
 import {
   FieldErrors,
   FieldValues,
   Path,
   UseFormRegister,
 } from "react-hook-form";
+import TextField from "@mui/material/TextField";
 import React from "react";
 
 type RHFTextFieldProps<T extends FieldValues> = {
   label: string;
   name: Path<T>;
-  type?: string;
   dir?: "rtl" | "ltr";
   register: UseFormRegister<T>;
   errors?: FieldErrors<T>;
-  validationSchema?: Record<string, unknown>;
-  className?: string;
   isRequired?: boolean;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+  className?: string;
+  type?: string;
+  size?: "small" | "medium";
+  placeholder?: string;
+  autoFocus?: boolean;
+  disabled?: boolean;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  autoComplete?: string;
+};
 
 export default function RHFTextField<T extends FieldValues>({
-  type = "text",
   label,
   name,
-  dir = "rtl",
   register,
   errors,
-  isRequired,
-  validationSchema = {},
-  ...rest
+  isRequired = false,
+  type = "text",
+  className,
+  size = "medium",
+  // dir = "rtl",
+  placeholder,
+  autoFocus,
+  disabled,
+  inputMode,
+  autoComplete,
 }: RHFTextFieldProps<T>) {
-  const errorMessages = errors?.[name];
-  const hasError = !!(errors && errorMessages);
   return (
-    <div
-      className={`textField relative ${hasError ? "textField--invalid" : ""}`}
-    >
-      <label htmlFor={name as string} className="mb-2 block text-secondary-700">
-        {label}
-        {isRequired && <span className="text-error ml-2">*</span>}
-      </label>
-      <input
-        autoComplete="off"
-        type={type}
-        id={name}
-        dir={dir}
-        className={`textField__input  ${
-          dir === "ltr" ? "text-left" : "text-right"
-        }`}
-        {...register(name, validationSchema)}
-        {...rest}
-      />
-      {errors && errors[name] && (
-        <span className="text-red-600 block text-xs mt-2">
-          {String(errors[name]?.message)}
-        </span>
-      )}
-    </div>
+    <TextField
+      label={label}
+      type={type}
+      fullWidth
+      variant="outlined"
+      margin="normal"
+      size={size}
+      error={!!errors?.[name]}
+      helperText={errors?.[name]?.message as string}
+      required={isRequired}
+      className={className}
+      // inputProps={{ dir }}
+      placeholder={placeholder}
+      autoFocus={autoFocus}
+      disabled={disabled}
+      inputMode={inputMode}
+      autoComplete={autoComplete}
+      {...register(name)}
+    />
   );
 }

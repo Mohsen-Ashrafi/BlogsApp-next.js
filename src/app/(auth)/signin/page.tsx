@@ -6,10 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-
-// export const metadata = {
-//   title: "Signup",
-// };
+import Loading from "@/ui/Loading";
 
 const schema = yup.object({
   email: yup.string().email("Email is invalid.").required("Email is required"),
@@ -38,6 +35,7 @@ function Signin() {
     };
     await signin(typedValues);
   };
+
   return (
     <div>
       <h1 className="text-xl font-bold text-secondary-500 text-center mb-6">
@@ -61,11 +59,24 @@ function Signin() {
           dir="ltr"
           isRequired
         />
-        <Button type="submit" variantType="primary" className="w-full">
-          Login
-        </Button>
+        <>
+          {isLoading ? (
+            <div>
+              <Loading />
+            </div>
+          ) : (
+            <Button type="submit" variantType="primary" className="w-full">
+              Login
+            </Button>
+          )}
+        </>
       </form>
-      <Link href="/signup" className="text-secondary-500 mt-6 text-center">
+      <Link
+        href="/signup"
+        className="text-secondary-0 bg-blue-500 p-3 rounded-xl mt-6 text-center
+      hover:bg-blue-400 transition-all duration-300
+      "
+      >
         Signup
       </Link>
     </div>

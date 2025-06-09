@@ -1,5 +1,10 @@
 "use client";
-import { getUserApi, signinApi, signupApi } from "@/services/authService";
+import {
+  getUserApi,
+  logoutApi,
+  signinApi,
+  signupApi,
+} from "@/services/authService";
 import { useRouter } from "next/navigation";
 import {
   createContext,
@@ -54,12 +59,19 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isLoading: false,
         error: null,
       };
+    case "logout":
+      return {
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+      };
   }
 };
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
-  const [{ user, isAuthenticated, isLoading, error }, dispatch] = useReducer(
+  const [{ user, isAuthenticated, isLoading }, dispatch] = useReducer(
     authReducer,
     initialState
   );
@@ -105,6 +117,17 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       dispatch({ type: "rejected", payload: errorMsg });
     }
   }
+  async function logout() {
+    try {
+      await logoutApi();
+      router.push("/signin");
+      dispatch({ type: "logout" });
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || "An error occurred during logout."
+      );
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -115,7 +138,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, isLoading, signin, signup }}
+      value={{ user, isAuthenticated, isLoading, signin, signup, logout }}
     >
       {children}
     </AuthContext.Provider>
@@ -127,6 +150,3 @@ export function useAuth() {
   if (context === undefined) throw new Error("not found Auth context");
   return useContext(AuthContext);
 }
-
-
-

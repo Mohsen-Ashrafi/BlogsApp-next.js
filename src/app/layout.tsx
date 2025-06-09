@@ -1,9 +1,9 @@
 import "@/styles/globals.css";
-import Header from "@/components/Header";
 import { ReactNode } from "react";
 import inter from "@/constants/localFont";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/context/AuthContext";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 export const metadata = {
   title: {
@@ -21,11 +21,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" dir="ltr">
       <body className={`${inter.className} min-h-screen font-sans`}>
-        <AuthProvider>
-          <Toaster />
-          <Header />
-          <div className="container xl:max-w-screen-xl">{children}</div>
-        </AuthProvider>
+        <Toaster />
+        <ReactQueryProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

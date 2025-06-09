@@ -8,10 +8,6 @@ import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import Loading from "@/ui/Loading";
 
-// export const metadata = {
-//   title: "Signup",
-// };
-
 const schema = yup.object({
   name: yup
     .string()

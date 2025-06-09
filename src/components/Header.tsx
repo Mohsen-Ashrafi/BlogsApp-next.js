@@ -1,24 +1,24 @@
 "use client";
-
 import { useAuth } from "@/context/AuthContext";
 import NavLink from "./NavLink";
-
+import { FaHome, FaUserCog, FaSignInAlt } from "react-icons/fa";
+import { FaBloggerB } from "react-icons/fa6";
 interface NavLinkItem {
   id: number;
-  children: string;
   path: string;
+  icon: React.ReactNode;
 }
 
 const navLinks: NavLinkItem[] = [
   {
     id: 1,
-    children: "Home",
     path: "/",
+    icon: <FaHome className="text-xl sm:text-3xl" />,
   },
   {
     id: 2,
-    children: "Blogs",
     path: "/blogs",
+    icon: <FaBloggerB className="text-xl sm:text-3xl" />,
   },
 ];
 
@@ -40,16 +40,20 @@ function Header() {
             {navLinks.map((navLink) => {
               return (
                 <li key={navLink.id}>
-                  <NavLink path={navLink.path}>{navLink.children}</NavLink>
+                  <NavLink path={navLink.path}>{navLink.icon}</NavLink>
                 </li>
               );
             })}
           </div>
           <li>
             {user ? (
-              <NavLink path="/profile">Profile</NavLink>
+              <NavLink path="/profile">
+                <FaUserCog className="text-xl sm:text-3xl" />
+              </NavLink>
             ) : (
-              <NavLink path="/signin">Login</NavLink>
+              <NavLink path="/signin">
+                <FaSignInAlt className="text-xl sm:text-3xl" />
+              </NavLink>
             )}
           </li>
         </ul>
