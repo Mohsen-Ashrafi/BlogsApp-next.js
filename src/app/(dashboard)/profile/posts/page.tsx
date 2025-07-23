@@ -8,11 +8,12 @@ import { getPosts } from "@/services/postServices";
 import Pagination from "@/ui/Pagination";
 
 interface PageProps {
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
 async function page({ searchParams }: PageProps) {
-  const query = queryString.stringify(searchParams);
+  const search = await searchParams;
+  const query = queryString.stringify(search);
   const { totalPages } = await getPosts(query);
 
   return (
