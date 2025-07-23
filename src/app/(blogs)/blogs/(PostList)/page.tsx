@@ -6,18 +6,20 @@ import { JSX } from "react";
 import setCookieForFetch from "@/utils/setCookieForFetch";
 
 interface BlogsPageProps {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams?: Record<string, string | string[] | undefined>;
 }
 
 async function BlogsPage({
   searchParams,
 }: BlogsPageProps): Promise<JSX.Element> {
-  const queries = queryString.stringify(searchParams);
+  // const queries = queryString.stringify(searchParams);
+  const queries = queryString.stringify(searchParams || {}); // 👈 fallback
   const cookieStore = await cookies();
   const options = setCookieForFetch(cookieStore);
   const { posts } = await getPosts(queries, options);
 
-  const { search } = searchParams;
+  // const { search } = searchParams;
+  const search = searchParams?.search;
   const resultText = posts.length > 1 ? "results" : "result";
 
   return (
