@@ -4,14 +4,20 @@ import queryString from "query-string";
 import PostList from "../../../_components/PostList";
 import setCookieForFetch from "@/utils/setCookieForFetch";
 
-interface CategoryProps {
-  params: {
-    categorySlug: string;
-  };
-  searchParams: Record<string, string | string[] | undefined>;
-}
+// interface CategoryProps {
+//   params: {
+//     categorySlug: string;
+//   };
+//   searchParams: Record<string, string | string[] | undefined>;
+// }
 
-async function Category({ params, searchParams }: CategoryProps) {
+async function Category({
+  params,
+  searchParams,
+}: {
+  params: { categorySlug: string };
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
   const { categorySlug } = params;
 
   const queries = `${queryString.stringify(
