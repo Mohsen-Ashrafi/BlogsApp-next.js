@@ -11,13 +11,12 @@ import setCookieForFetch from "@/utils/setCookieForFetch";
 //   searchParams: Record<string, string | string[] | undefined>;
 // }
 
-async function Category({
-  params,
-  searchParams,
-}: {
+type Props = {
   params: { categorySlug: string };
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+async function Category({ params, searchParams }: Props) {
   const { categorySlug } = params;
 
   const queries = `${queryString.stringify(
