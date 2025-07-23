@@ -1,6 +1,6 @@
-const getUrlExtension = (url: string): string => {
-    return url.split(/[#?]/)[0].split(".").pop().trim();
-};
+// const getUrlExtension = (url: string): string => {
+//     return url.split(/[#?]/)[0].split(".").pop().trim();
+// };
 
 const getFilename = (url: string): string => {
     // const  filename = url.substr( url.lastIndexOf("/") + 1);
