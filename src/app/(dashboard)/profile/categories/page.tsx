@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import Fallback from "@/ui/Fallback";
 import CategoriesTable from "./_/components/CategoriesTable";
