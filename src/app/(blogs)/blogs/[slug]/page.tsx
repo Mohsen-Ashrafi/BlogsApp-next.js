@@ -54,7 +54,7 @@
 
 // export default SinglePost;
 
-import { getPostBySlug, getPosts } from "@/services/postServices";
+import { getPostBySlug } from "@/services/postServices";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import RelatedPost from "../_components/RelatedPost";
@@ -66,10 +66,20 @@ interface PageProps {
 
 export const dynamicParams = false;
 
+// export async function generateStaticParams() {
+//   const { posts } = await getPosts();
+//   const slugs = posts.map((post) => ({ slug: post.slug }));
+//   return slugs;
+// }
+
 export async function generateStaticParams() {
-  const { posts } = await getPosts();
-  const slugs = posts.map((post) => ({ slug: post.slug }));
-  return slugs;
+  try {
+    // const posts = await getPosts(); // اینو موقتاً بردار یا غیرفعال کن
+    return []; // موقت
+  } catch (error) {
+    console.error("Error in generateStaticParams:", error);
+    return [];
+  }
 }
 
 export async function generateMetadata({
