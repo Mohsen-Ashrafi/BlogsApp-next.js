@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; // اضافه شده
 
 import { Suspense } from "react";
 import Fallback from "@/ui/Fallback";
