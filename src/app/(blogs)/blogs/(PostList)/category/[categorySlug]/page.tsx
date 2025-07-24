@@ -40,7 +40,7 @@ import { getPosts } from "@/services/postServices";
 import { cookies } from "next/headers";
 import queryString from "query-string";
 import PostList from "../../../_components/PostList";
-import setCookieForFetch from "@/utils/setCookieForFetch";
+import setCookieOnReq from "@/utils/setCookieOnReq";
 
 interface CategoryProps {
   params: Promise<{ categorySlug: string }>;
@@ -55,7 +55,7 @@ async function Category({ params, searchParams }: CategoryProps) {
     search
   )}&categorySlug=${categorySlug}`;
   const cookieStore = await cookies();
-  const options = setCookieForFetch(cookieStore);
+  const options = setCookieOnReq(cookieStore);
   const { posts } = await getPosts(queries, options);
 
   return (
