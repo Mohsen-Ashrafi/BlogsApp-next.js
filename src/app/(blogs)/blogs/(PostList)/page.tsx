@@ -3,23 +3,21 @@ import { getPosts } from "@/services/postServices";
 import queryString from "query-string";
 import PostList from "../_components/PostList";
 import { JSX } from "react";
-import setCookieForFetch from "@/utils/setCookieForFetch";
+import setCookieOnReq from "@/utils/setCookieOnReq";
 
 interface BlogsPageProps {
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 async function BlogsPage({
   searchParams,
 }: BlogsPageProps): Promise<JSX.Element> {
-  // const queries = queryString.stringify(searchParams);
-  const queries = queryString.stringify(searchParams || {}); // 👈 fallback
+  const queries = queryString.stringify(searchParams);
   const cookieStore = await cookies();
-  const options = setCookieForFetch(cookieStore);
+  const options = setCookieOnReq(cookieStore);
   const { posts } = await getPosts(queries, options);
 
-  // const { search } = searchParams;
-  const search = searchParams?.search;
+  const { search } = await searchParams;
   const resultText = posts.length > 1 ? "results" : "result";
 
   return (

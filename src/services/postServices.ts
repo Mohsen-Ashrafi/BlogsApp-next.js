@@ -3,23 +3,36 @@ import http from "./httpService";
 import { AxiosRequestConfig } from "axios";
 
 
+// export async function getPostBySlug(slug: string): Promise<Post | null> {
+//     const res = await fetch(
+//         `${process.env.NEXT_PUBLIC_BASE_URL}/post/slug/${slug}`
+//     );
+//     const { data }: APIResponse = await res.json();
+//     const { post } = data || {};
+//     return post
+// }
+
+// export async function getPosts(queries: string = "", options?: RequestInit): Promise<PostListResponse> {
+//     const res = await fetch(
+//         `${process.env.NEXT_PUBLIC_BASE_URL}/post/list?${queries}`,
+//         options
+//     );
+//     const { data }: { data: PostListResponse } = await res.json();
+//     const { posts, totalPages } = data || {}
+//     return { posts, totalPages };
+// }
+
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/post/slug/${slug}`
-    );
-    const { data }: APIResponse = await res.json();
-    const { post } = data || {};
-    return post
+    const { data }: APIResponse = await http.get(`/post/slug/${slug}`).then(res => res.data);
+    return data?.post ?? null;
 }
 
-export async function getPosts(queries: string = "", options?: RequestInit): Promise<PostListResponse> {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/post/list?${queries}`,
-        options
-    );
-    const { data }: { data: PostListResponse } = await res.json();
-    const { posts, totalPages } = data || {}
-    return { posts, totalPages };
+export async function getPosts(queries: string = "", options?: AxiosRequestConfig): Promise<PostListResponse> {
+    const { data }: { data: PostListResponse } = await http.get(`/post/list?${queries}`, options).then(res => res.data);
+    return {
+        posts: data.posts,
+        totalPages: data.totalPages,
+    };
 }
 
 interface ActionResponse {
