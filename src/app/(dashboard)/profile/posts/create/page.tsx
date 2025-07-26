@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import Breadcrumbs from "@/ui/Breadcrumbs";
 import CreatePostForm from "./_/CreatePostForm";
 
