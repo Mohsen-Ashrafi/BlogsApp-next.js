@@ -1,7 +1,9 @@
+"use client";
+
 import Breadcrumbs from "@/ui/Breadcrumbs";
 import CreatePostForm from "./_/CreatePostForm";
 
-function page() {
+function Page() {
   return (
     <div>
       <Breadcrumbs
@@ -22,6 +24,4 @@ function page() {
   );
 }
 
-export default page;
-
-
+export default Page;
