@@ -24,19 +24,15 @@
 // }
 // export default CategoryPage;
 
+// app/(dashboard)/profile/users/page.tsx
+
 import UsersTableWrapper from "./UsersTableWrapper";
 
-function CategoryPage() {
+export default function CategoryPage() {
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-secondary-700 mb-8 font-bold text-xl">
-          Users list
-        </h1>
-      </div>
+      <h1 className="text-secondary-700 mb-8 font-bold text-xl">Users list</h1>
       <UsersTableWrapper />
     </div>
   );
 }
-
-export default CategoryPage;

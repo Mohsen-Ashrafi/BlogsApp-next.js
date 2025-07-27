@@ -1,3 +1,4 @@
+// app/(dashboard)/profile/users/UsersTableWrapper.tsx
 "use client";
 
 import dynamic from "next/dynamic";
