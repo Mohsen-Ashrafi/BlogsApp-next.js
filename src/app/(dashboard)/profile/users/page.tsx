@@ -1,6 +1,12 @@
 import { Suspense } from "react";
 import Fallback from "@/ui/Fallback";
-import UsersTable from "./_/componets/UsersTable";
+import dynamic from "next/dynamic";
+// import UsersTable from "./_/componets/UsersTable";
+
+const UsersTable = dynamic(() => import("./_/componets/UsersTable"), {
+  ssr: false,
+  loading: () => <Fallback />,
+});
 
 async function CategoryPage() {
   return (
