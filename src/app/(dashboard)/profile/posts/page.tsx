@@ -1,3 +1,4 @@
+"use client"
 import { Suspense } from "react";
 import PostTable from "./_/components/PostTable";
 import Spinner from "@/ui/Spinner";
