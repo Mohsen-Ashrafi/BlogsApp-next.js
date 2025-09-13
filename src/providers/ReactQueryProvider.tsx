@@ -8,10 +8,7 @@ interface ReactQueryProviderProps {
 }
 
 const queryClient = new QueryClient();
-
-export default function ReactQueryProvider({
-  children,
-}: ReactQueryProviderProps) {
+function ReactQueryProvider({ children }: ReactQueryProviderProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
@@ -19,3 +16,5 @@ export default function ReactQueryProvider({
     </QueryClientProvider>
   );
 }
+
+export default ReactQueryProvider;

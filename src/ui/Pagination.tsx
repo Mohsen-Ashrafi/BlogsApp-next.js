@@ -1,4 +1,5 @@
 "use client";
+
 import { generatePagination } from "@/utils/generatePagination";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
@@ -43,15 +44,16 @@ export default function Pagination({ totalPages }: PaginationProps) {
   return (
     <div className="inline-flex">
       <PaginationArrow
-        direction="left"
+        direction="right"
         href={createPageURL(currentPage - 1)}
         isDisabled={currentPage <= 1}
       />
 
-      <div className="flex -space-x-px">
+      <div className="flex -space-x-px mx-4">
         {allPages.map((page, index) => {
           // let position: "first" | "last" | "single" | "middle" | undefined;
-          let position;
+          // let position;
+          let position: PaginationPosition = undefined;
           if (index === 0) position = "first";
           if (index === allPages.length - 1) position = "last";
           if (allPages.length === 1) position = "single";
@@ -70,7 +72,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
       </div>
 
       <PaginationArrow
-        direction="right"
+        direction="left"
         href={createPageURL(currentPage + 1)}
         isDisabled={currentPage >= totalPages}
       />
@@ -87,10 +89,10 @@ function PaginationNumber({
   position,
 }: PaginationNumberProps) {
   const className = classNames(
-    "flex h-10 w-10 items-center justify-center text-sm border border-secondary-400 text-secondary-400",
+    "mx-2 flex h-10 w-10 items-center justify-center text-sm border border-secondary-400 text-secondary-400",
     {
-      "rounded-l-md": position === "first" || position === "single",
-      "rounded-r-md": position === "last" || position === "single",
+      "rounded-md": position === "first" || position === "single",
+      // "rounded-md": position === "last" || position === "single",
       "z-10 bg-primary-900 !border-primary-900 text-white": isActive,
       "hover:bg-secondary-200": !isActive && position !== "middle",
       "text-secondary-300": position === "middle",
@@ -124,9 +126,9 @@ function PaginationArrow({
 
   const icon =
     direction === "left" ? (
-      <ArrowLeftIcon className="w-4" />
-    ) : (
       <ArrowRightIcon className="w-4" />
+    ) : (
+      <ArrowLeftIcon className="w-4" />
     );
 
   return isDisabled ? (

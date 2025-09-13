@@ -1,21 +1,31 @@
 /** @type {import('next').NextConfig} */
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "5000",
+        protocol: "https",
+        hostname: "blog-app-backend-29rf.onrender.com",
         pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.postimg.cc",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**", 
       },
     ],
   },
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://blog-app-backend-29rf.onrender.com/:path*",
+      },
+    ];
   },
 };
 

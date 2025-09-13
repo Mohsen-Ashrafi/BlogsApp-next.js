@@ -4,9 +4,6 @@ import {
   Path,
   UseFormRegister,
 } from "react-hook-form";
-import React from "react";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
 
 interface Option {
   label: string;
@@ -22,38 +19,26 @@ type RHFSelectProps<T extends FieldValues> = {
   errors?: FieldErrors<T>;
 };
 
-const RHFSelect = <T extends FieldValues>({
+function RHFSelect<T extends FieldValues>({
   label,
   name,
   register,
   options,
-  isRequired = false,
-  errors,
-}: RHFSelectProps<T>) => {
-  const hasError = !!errors?.[name];
-
+  isRequired,
+}: RHFSelectProps<T>) {
   return (
-    <TextField
-      select
-      label={label}
-      fullWidth
-      margin="normal"
-      variant="outlined"
-      size="medium"
-      error={hasError}
-      helperText={errors?.[name]?.message as string}
-      required={isRequired}
-      {...register(name)}
-    >
-      {options.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
-          {option.label}
-        </MenuItem>
-      ))}
-    </TextField>
+    <div>
+      <label htmlFor={name} className="mb-2 block text-secondary-700">
+        {label} {isRequired && <span className="text-error">*</span>}
+      </label>
+      <select {...register(name)} id={name} className="textField__input">
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
   );
-};
-
+}
 export default RHFSelect;
-
-

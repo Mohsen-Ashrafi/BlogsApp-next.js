@@ -1,25 +1,21 @@
 import { getCategoryApi } from "@/services/categoryService";
 import { useQuery } from "@tanstack/react-query";
+import { Category } from "types/ApiTypes";
 
-export function useCategories() {
-    const { data, isLoading } = useQuery({
-        queryKey: ["categories"],
-        queryFn: getCategoryApi
-    })
+export function useCategories(): {
+  transformedCategories: { label: string; value: string }[];
+  isLoading: boolean;
+} {
+  const { data, isLoading } = useQuery<Category[]>({
+    queryKey: ["category"],
+    queryFn: getCategoryApi,
+  });
+  // const { categories = [] } = data || {};
+  const categories = data || [];
 
-    const { categories: rawCategories = [] } = data || {}
-
-
-    const categories = rawCategories.map((item) => ({
-        label: item.title,
-        value: item._id
-    }))
-
-
-    const transformedCategories = rawCategories.map((item) => ({
-        label: item.title,
-        value: item.englishTitle
-    }))
-
-    return { isLoading, categories, transformedCategories }
+  const transformedCategories = categories.map((item) => ({
+    label: item.title,
+    value: item._id,
+  }));
+  return { transformedCategories, isLoading };
 }

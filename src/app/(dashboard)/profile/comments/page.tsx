@@ -1,11 +1,8 @@
-export const dynamic = "force-dynamic";
-
-import { Suspense } from "react";
 import Fallback from "@/ui/Fallback";
-import CommentsTable from "./_/components/CommentsTable";
+import { JSX, Suspense } from "react";
+import CommentsTable from "./_/components/CommentsTable"
 
-
-async function CommentPage() {
+async function CommentPage(): Promise<JSX.Element> {
   return (
     <div>
       <div className="flex items-center justify-between">

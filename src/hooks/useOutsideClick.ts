@@ -1,50 +1,29 @@
-// import { RefObject, useEffect, useRef } from "react";
-
-// export default function useOutsideClick(
-//     handler: () => void,
-//     listenCapturing = true
-// ): RefObject<HTMLDivElement> {
-//     const ref = useRef<HTMLDivElement>(null)
-
-//     useEffect(() => {
-//         function handleClick(e: MouseEvent) {
-//             if (ref.current && !ref.current.contains(e.target as Node)) {
-//                 handler()
-//             }
-//         }
-
-//         document.addEventListener("click", handleClick, listenCapturing)
-
-//         return () =>
-//             document.removeEventListener("click", handleClick, listenCapturing)
-//     }, [handler, listenCapturing])
-
-//     return ref
-// }
-
 "use client";
+import { useEffect, useRef } from "react";
 
-import { RefObject, useEffect, useRef } from "react";
+export default function useOutsideClick(handler: () => void, listenCapturing = true) {
+  const ref = useRef<HTMLDivElement>(null);
 
-export default function useOutsideClick(
-    handler: () => void,
-    listenCapturing = true
-): RefObject<HTMLDivElement> {
-    const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        handler();
+      }
+    }
+    if (typeof document !== "undefined") {
+      document.addEventListener("click", handleClick, listenCapturing);
+    }
 
-    useEffect(() => {
-        if (typeof document === "undefined") return;
+    return () => {
+      if (typeof document !== "undefined") {
+        return document.removeEventListener(
+          "click",
+          handleClick,
+          listenCapturing
+        );
+      }
+    };
+  }, [handler, listenCapturing]);
 
-        function handleClick(e: MouseEvent) {
-            if (ref.current && !ref.current.contains(e.target as Node)) {
-                handler();
-            }
-        }
-
-        document.addEventListener("click", handleClick, listenCapturing);
-        return () =>
-            document.removeEventListener("click", handleClick, listenCapturing);
-    }, [handler, listenCapturing]);
-
-    return ref;
+  return ref;
 }

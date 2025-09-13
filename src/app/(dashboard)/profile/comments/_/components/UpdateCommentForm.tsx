@@ -1,11 +1,11 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { useActionState, useEffect } from "react";
-import toast from "react-hot-toast";
-import SubmitButton from "@/ui/SubmitButton";
-import updateComment from "../actions/updateComment";
 import RHFSelectComment from "@/ui/RHFSelectComment";
+import SubmitButton from "@/ui/SubmitButton";
+import { useActionState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import updateComment from "../actions/updateComment";
 
 interface UpdateCommentFormProps {
   comment: {
@@ -19,7 +19,13 @@ interface FormValues {
   status: number;
 }
 
-const options = [
+interface options {
+  id: number;
+  label: string;
+  value: number;
+}
+
+const options: options[] = [
   {
     id: 1,
     label: "Rejected",
@@ -77,4 +83,5 @@ function UpdateCommentForm({ comment, onClose }: UpdateCommentFormProps) {
     </form>
   );
 }
+
 export default UpdateCommentForm;

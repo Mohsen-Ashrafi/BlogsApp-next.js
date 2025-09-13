@@ -4,6 +4,12 @@ export type SignupInput = {
     password: string;
 };
 
+export type SigninInput = {
+    email: string;
+    password: string;
+};
+
+
 export type User = {
     _id: string;
     name: string;

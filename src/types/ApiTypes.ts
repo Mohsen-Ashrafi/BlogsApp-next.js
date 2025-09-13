@@ -1,47 +1,75 @@
 
 export interface Author {
   name: string;
-  avatarUrl: string;
+  avatarUrl?: string;
 }
+
 
 export interface PostListType {
   _id: string;
   title: string;
-  coverImageUrl: string;
+  coverImage: string;
+
   slug?: string;
-  author?: Author;
+  author: Author;
   readingTime?: number;
+
   commentsCount: number;
   isLiked: boolean;
   isBookmarked: boolean;
-  category?: {
-    title: string;
-  };
+
+  category?: { title: string };
+  type?: "free" | "premium";
+  createdAt?: string;
 }
+
+export interface PostListProps {
+  posts: PostListType[];
+  totalPages?: number;
+  showPagination?: boolean;
+}
+
 
 export interface PostListResponse {
   posts: PostListType[];
   totalPages: number;
 }
 
+export interface ActionResponse {
+  message: string;
+}
+
+export interface GetPostSlugResponse {
+  post: Post | null;
+}
+
+
+export interface Category {
+  title: string;
+}
 
 export interface Post {
   _id: string;
   title: string;
   briefText: string;
   text: string;
-  coverImageUrl: string;
+  coverImage: string;
+  coverImageUrl?: string | null;
+  slug?: string;
+  author?: Author;
+  readingTime?: number;
+  commentsCount: number;
   isLiked: boolean;
   isBookmarked: boolean;
-  commentsCount: number;
+  category?: Category;
+  type?: "free" | "premium";
+  createdAt?: string;
   related?: Post[];
   comments: CommentType[];
 }
 
-export interface APIResponse {
-  data: {
-    post: Post | null;
-  };
+export interface APIResponse<T> {
+  data: T;
 }
 
 export interface DisplayPost {
@@ -101,6 +129,16 @@ export interface CommentRowData {
     answers?: CommentRowData[];
   };
 }
+export type RawComment = {
+  _id: string;
+  content?: { text: string };
+  text?: string;
+  user?: { name: string };
+  userName?: string;
+  status?: string;
+  createdAt: string;
+  answers?: RawComment[];
+};
 
 export interface CommentsTableData {
   comments: CommentRowData[];
@@ -170,6 +208,28 @@ export interface Category {
   slug: string;
   createdAt: string;
   updatedAt?: string;
+  categories: Category[]
 }
 
 
+export interface CloudinaryUploadResponse {
+  asset_id: string;
+  public_id: string;
+  version: number;
+  version_id: string;
+  signature: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  created_at: string;
+  tags: string[];
+  bytes: number;
+  type: string;
+  etag: string;
+  placeholder: boolean;
+  url: string;
+  secure_url: string;
+  folder: string;
+  original_filename: string;
+}  

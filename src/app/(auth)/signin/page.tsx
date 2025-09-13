@@ -1,12 +1,14 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import Button from "@/ui/Button";
+import FormUi from "@/ui/FormUi";
+import Loading from "@/ui/Loading";
 import RHFTextField from "@/ui/RHFTextField";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
-import Loading from "@/ui/Loading";
+import { JSX } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 const schema = yup.object({
   email: yup.string().email("Email is invalid.").required("Email is required"),
@@ -15,7 +17,7 @@ const schema = yup.object({
 
 type FormValues = yup.InferType<typeof schema>;
 
-function Signin() {
+function Signin(): JSX.Element {
   const {
     register,
     handleSubmit,
@@ -25,23 +27,18 @@ function Signin() {
     mode: "onTouched",
   });
 
-  const { signin } = useAuth();
+  const { Signin } = useAuth();
 
-  const onSubmit = async (values: unknown) => {
-    const typedValues = values as {
-      name: string;
-      email: string;
-      password: string;
-    };
-    await signin(typedValues);
+  const onSubmit = async (values: FormValues): Promise<void> => {
+    await Signin(values);
   };
 
   return (
-    <div>
-      <h1 className="text-xl font-bold text-secondary-500 text-center mb-6">
-        Signin
+    <FormUi>
+      <h1 className="text-2xl font-bold text-secondary-900 text-center mb-8">
+        Login
       </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <RHFTextField<FormValues>
           label="Email"
           name="email"
@@ -59,27 +56,24 @@ function Signin() {
           dir="ltr"
           isRequired
         />
-        <>
-          {isLoading ? (
-            <div>
-              <Loading />
-            </div>
-          ) : (
-            <Button type="submit" variantType="primary" className="w-full">
-              Login
-            </Button>
-          )}
-        </>
+        {isLoading ? (
+          <div className="flex justify-center">
+            <Loading />
+          </div>
+        ) : (
+          <Button type="submit" className="w-full">
+            Login
+          </Button>
+        )}
       </form>
+
       <Link
         href="/signup"
-        className="text-secondary-0 bg-blue-500 p-3 rounded-xl mt-6 text-center
-      hover:bg-blue-400 transition-all duration-300
-      "
+        className="block text-center text-blue-400 mt-6 hover:underline"
       >
         Signup
       </Link>
-    </div>
+    </FormUi>
   );
 }
 

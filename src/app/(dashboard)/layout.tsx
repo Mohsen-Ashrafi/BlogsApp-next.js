@@ -3,8 +3,8 @@ import Header from "./profile/_components/Header";
 import SideBar from "./profile/_components/SideBar";
 
 export const metadata = {
-  title: "Profile",
-  description: "Profile",
+  title: "profile",
+  description: "profile",
 };
 
 interface RootLayoutProps {

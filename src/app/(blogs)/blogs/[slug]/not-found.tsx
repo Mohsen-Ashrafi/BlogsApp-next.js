@@ -1,18 +1,17 @@
 import Link from "next/link";
+import { JSX } from "react";
 
-function NotFound() {
+function NotFound(): JSX.Element {
   return (
-    <div className="h-screen">
-      <div className="container xl:max-w-screen-xl">
-        <div className="flex justify-center pt-10">
-          <div>
-            <p className="text-xl font-bold text-red-600 mb-8">
-              No posts were found that match your search.
-            </p>
-            <Link href="/blogs" className="text-secondary-500">
-              Go to the posts page?
-            </Link>
-          </div>
+    <div className="container xl:max-w-screen-xl">
+      <div className="flex justify-center pt-10">
+        <div>
+          <p className="text-2xl font-semibold text-red-600 mb-8 ">
+            No post found with the given criteria.
+          </p>
+          <Link href="/blogs" className="text-primary-900 text-lg font-bold">
+            Go to the blog page?
+          </Link>
         </div>
       </div>
     </div>

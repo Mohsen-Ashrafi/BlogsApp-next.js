@@ -1,12 +1,12 @@
 import Spinner from "@/ui/Spinner";
+import { JSX } from "react";
 
-function loading() {
+function Loading(): JSX.Element {
   return (
-    <div className="flex flex-col items-center justify-center gap-x-4">
-      <span className="text-lg text-secondary-500">Loading data</span>
+    <div className="grid items-center justify-center gap-x-4">
+      <span className="text-lg text-secondary-500">Loading Data ...</span>
       <Spinner />
     </div>
   );
 }
-
-export default loading;
+export default Loading;

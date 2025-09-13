@@ -1,20 +1,9 @@
-import Table from "@/ui/Table";
-import Empty from "@/ui/Empty";
 import { getAllCommentsApi } from "@/services/commentService";
-import CommentRow from "./CommentRow";
+import Empty from "@/ui/Empty";
+import Table from "@/ui/Table";
 import { Fragment } from "react";
-import { CommentRowData } from "types/ApiTypes";
-
-type RawComment = {
-  _id: string;
-  content?: { text: string };
-  text?: string;
-  user?: { name: string };
-  userName?: string;
-  status?: string;
-  createdAt: string;
-  answers?: RawComment[];
-};
+import CommentRow from "./CommentRow";
+import { CommentRowData, RawComment } from "types/ApiTypes";
 
 async function CommentsTable() {
   const { comments }: { comments: RawComment[] } = await getAllCommentsApi();
@@ -31,13 +20,13 @@ async function CommentsTable() {
         content: { text: comment.content?.text ?? comment.text ?? "" },
         user: { name: comment.user?.name ?? comment.userName ?? "Unknown" },
         createdAt: comment.createdAt,
-        status: comment.status,
+        status: comment.status ?? "Pending",
         answers: comment.answers?.map(normalizeComment),
       },
     };
   };
 
-  const normalizedComments: CommentRowData[] = comments.map(normalizeComment);
+  const normalizedComments = comments.map(normalizeComment);
 
   return (
     <Table>
@@ -47,7 +36,6 @@ async function CommentsTable() {
         <th>Author</th>
         <th>Created At</th>
         <th>Status</th>
-        <th>Actions</th>
       </Table.Header>
       <Table.Body>
         {normalizedComments.map((commentData) => (
@@ -62,4 +50,5 @@ async function CommentsTable() {
     </Table>
   );
 }
+
 export default CommentsTable;

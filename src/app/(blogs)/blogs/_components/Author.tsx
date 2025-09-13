@@ -1,15 +1,17 @@
 import Avatar from "@/ui/Avatar";
-import React from "react";
 
 interface AuthorProps {
   name: string;
-  avatarUrl: string;
+  avatarUrl?: string;
 }
 
-function Author({ name, avatarUrl }:AuthorProps) {
+const defaultAvatarImg =
+  "https://i.postimg.cc/BbZkbb9F/1721899817313-127506334.png";
+
+function Author({ name, avatarUrl = defaultAvatarImg }: AuthorProps) {
   return (
-    <div className="flex items-center gap-x-2">
-      <Avatar src={avatarUrl} />
+    <div className="flex items-center gap-x-1">
+      <Avatar src={avatarUrl || defaultAvatarImg} />
       <span className="text-sm text-secondary-500">{name}</span>
     </div>
   );

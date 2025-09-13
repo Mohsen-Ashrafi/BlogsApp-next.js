@@ -1,12 +1,21 @@
 "use client";
-import RHFTextField from "@/ui/RHFTextField";
-import { useForm } from "react-hook-form";
-import Button from "@/ui/Button";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
 import { useAuth } from "@/context/AuthContext";
+import Button from "@/ui/Button";
+import FormUi from "@/ui/FormUi";
+import RHFTextField from "@/ui/RHFTextField";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import Loading from "@/ui/Loading";
+import { useRouter } from "next/navigation";
+import { JSX } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+
+// const schema = yup
+//   .object({
+//     name: yup.string().required("required"),
+//   })
+//   .required();
 
 const schema = yup.object({
   name: yup
@@ -20,77 +29,58 @@ const schema = yup.object({
 
 type FormValues = yup.InferType<typeof schema>;
 
-function Signup() {
+function Signup(): JSX.Element {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: "onTouched",
   });
 
-  const { signup } = useAuth();
+  // const router = useRouter();
+  const { Signup } = useAuth();
 
-  const onSubmit = async (values: unknown) => {
-    const typedValues = values as {
-      name: string;
-      email: string;
-      password: string;
-    };
-    await signup(typedValues);
+  const onSubmit = async (values: FormValues) => {
+    await Signup(values);
   };
 
   return (
-    <div>
-      <h1 className="text-xl font-bold text-secondary-500 text-center mb-6 -mt-16">
-        Signup
-      </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <RHFTextField<FormValues>
-          label="First and Last Name"
-          name="name"
-          register={register}
-          errors={errors}
-          dir="ltr"
-          isRequired
-        />
-        <RHFTextField<FormValues>
-          label="Email"
-          name="email"
-          register={register}
-          errors={errors}
-          dir="ltr"
-          isRequired
-        />
-        <RHFTextField<FormValues>
-          label="Password"
-          name="password"
-          register={register}
-          errors={errors}
-          type="password"
-          dir="ltr"
-          isRequired
-        />
-        <div>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Button type="submit" variantType="primary" className="w-full">
+    <FormUi>
+      <div>
+        <h1 className="text-secondary-900 text-center mb-6 text-xl font-bold">
+          Signup
+        </h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+          <RHFTextField<FormValues>
+            register={register}
+            label="Full Name"
+            name="name"
+            errors={errors}
+          />
+          <RHFTextField<FormValues>
+            register={register}
+            label="Email"
+            name="email"
+          />
+          <RHFTextField<FormValues>
+            register={register}
+            label="Password"
+            name="password"
+            type="password"
+          />
+          <div className="mt-6">
+            <Button className="w-full" type="submit">
               Confirm
             </Button>
-          )}
-        </div>
-      </form>
-      <Link
-        href="/signin"
-        className="text-secondary-0 bg-blue-500 p-3 rounded-xl mt-6 text-center
-      hover:bg-blue-400 transition-all duration-300
-      "
-      >
-        Signin
-      </Link>
-    </div>
+          </div>
+        </form>
+        <Link href="/signin " className="text-secondary-500 mt-6 text-center">
+          Login
+        </Link>
+      </div>
+    </FormUi>
   );
 }
 

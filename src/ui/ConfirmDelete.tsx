@@ -1,20 +1,22 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
-import { FC, FormEvent } from "react";
+import { FormEvent } from "react";
 
 interface ConfirmDeleteProps {
   resourceName: string;
   onClose: () => void;
   disabled?: boolean;
-  onConfirm: (e: FormEvent<HTMLFormElement>) => void;
+  onConfirm: (
+    e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
+  ) => void;
 }
 
-const ConfirmDelete: FC<ConfirmDeleteProps> = ({
+function ConfirmDelete({
   resourceName,
   onClose,
   disabled,
   onConfirm,
-}) => {
+}: ConfirmDeleteProps) {
   return (
     <div>
       <h2 className="font-bold text-base mb-8 text-secondary-700">
@@ -23,29 +25,26 @@ const ConfirmDelete: FC<ConfirmDeleteProps> = ({
       <form onSubmit={onConfirm}>
         <div className="flex justify-between items-center gap-x-16">
           <Button
-            type="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              onConfirm(e as unknown as FormEvent<HTMLFormElement>);
-            }}
-            disabled={disabled}
-            variantType="danger"
-            className="flex gap-x-2 justify-center items-center flex-1"
-          >
-            <TrashIcon className="w-5" />
-            <span>Delete</span>
-          </Button>
-          <Button
             className="flex-1"
-            variantType="outline"
+            variant="outline"
             onClick={onClose}
             type="button"
           >
             Cancel
           </Button>
+          <Button
+            type="submit"
+            onClick={onConfirm}
+            disabled={disabled}
+            variant="danger"
+            className="flex gap-x-2 justify-center items-center flex-1"
+          >
+            <TrashIcon className="w-5" />
+            <span>Delete</span>
+          </Button>
         </div>
       </form>
     </div>
   );
-};
+}
 export default ConfirmDelete;

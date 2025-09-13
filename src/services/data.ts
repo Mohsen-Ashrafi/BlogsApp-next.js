@@ -1,40 +1,36 @@
-import setCookieOnReq from "@/utils/setCookieOnReq";
+import { setCookieOnReq } from "@/utils/setCookieOnReq";
 import { cookies } from "next/headers";
-import { getAllUsersApi } from "./authService";
 import { getAllCommentsApi } from "./commentService";
+import { getAllUsers } from "./authService";
 import { getPosts } from "./postServices";
 
 export interface CardData {
-    numberOfUsers: number;
-    numberOfComments: number;
-    numberOfPosts: number;
+  numberOfUsers: number;
+  numberOfComments: number;
+  numberOfPosts: number;
 }
 
 
+export async function fetchAllData(): Promise<CardData> {
+  const cookieStore = await cookies();
+  const option = setCookieOnReq(cookieStore);
 
-export async function fetchCardData(): Promise<CardData> {
-    const cookieStore = await cookies();
-    const options = setCookieOnReq(cookieStore)
+  try {
+    const data = await Promise.all([
+      getAllCommentsApi(option),
+      getAllUsers(option),
+      getPosts(),
+    ]);
 
-    try {
-        const data = await Promise.all([
-            getAllUsersApi(options),
-            getAllCommentsApi(options),
-            getPosts(),
-        ]);
-
-        const numberOfUsers = Number(data[0].users.length ?? "0");
-        const numberOfComments = Number(data[2].posts.length ?? "0");
-        const numberOfPosts = Number(data[1].commentsCount ?? "0");
-
-        return {
-            numberOfComments,
-            numberOfPosts,
-            numberOfUsers
-        }
-    } catch (error) {
-        console.error("Error", error.response.data.message);
-        throw new Error("Error loading information");
-    }
+    const numberOfComments = data[0].commentsCount ?? "0";
+    const numberOfUsers = data[1].users.length ?? "0";
+    const numberOfPosts = data[2].posts.length ?? "0";
+    return {
+      numberOfComments,
+      numberOfUsers,
+      numberOfPosts,
+    };
+  } catch (error) {
+    throw new Error("Error loading");
+  }
 }
-

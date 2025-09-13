@@ -3,9 +3,9 @@ import { ChangeEvent } from "react";
 interface TextAreaProps {
   label: string;
   name: string;
-  value: string;
+  value?: string;
   dir?: "rtl" | "ltr";
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   isRequired?: boolean;
 }
 
@@ -21,7 +21,7 @@ function TextArea({
     <div className="textField">
       <label htmlFor={name} className="text-secondary-600 text-sm">
         {label}
-        {isRequired && <span className="text-error ml-1">*</span>}
+        {isRequired && <span className="text-error">*</span>}
       </label>
       <textarea
         name={name}

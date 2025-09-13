@@ -1,4 +1,4 @@
-const SvgComponent = (props: React.SVGProps<SVGSVGElement>) => {
+export default function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       className="fill-primary-900"
@@ -17,6 +17,4 @@ const SvgComponent = (props: React.SVGProps<SVGSVGElement>) => {
       />
     </svg>
   );
-};
-
-export default SvgComponent;
+}

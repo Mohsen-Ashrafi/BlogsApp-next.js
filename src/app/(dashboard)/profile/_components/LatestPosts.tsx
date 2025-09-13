@@ -1,8 +1,9 @@
-import PostTable from "../posts/_/components/PostTable";
+import { JSX } from "react";
+import PostRow from "../posts/_/components/PostTable";
 
-function LatestPosts() {
-  const query = "sort=latest&limit=5";
-  return <PostTable query={query} />;
+function LatestPost(): JSX.Element  {
+  const queri = "sort=latest&limit=3";
+  return <PostRow queries={queri} />;
 }
 
-export default LatestPosts;
+export default LatestPost;

@@ -3,13 +3,13 @@
 import { createComment } from "@/lib/actions";
 import SubmitButton from "@/ui/SubmitButton";
 import TextArea from "@/ui/TextArea";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { CommentFormState } from "types/ApiTypes";
 
-const initiaState: CommentFormState = {
-  error: "",
+const initialState: CommentFormState = {
   message: "",
+  error: "",
 };
 
 interface CommentPayload {
@@ -18,9 +18,8 @@ interface CommentPayload {
   onClose: () => void;
 }
 
-function CommentForm({ postId, parentId, onClose }: CommentPayload) {
-  const [text, setText] = useState("");
-  const [state, formAction] = useActionState(createComment, initiaState);
+function CommentForm({ onClose, postId, parentId }: CommentPayload) {
+  const [state, formAction] = useActionState(createComment, initialState);
 
   useEffect(() => {
     if (state?.message) {
@@ -30,33 +29,24 @@ function CommentForm({ postId, parentId, onClose }: CommentPayload) {
     if (state?.error) {
       toast.error(state.error);
     }
-  }, [state, onClose]);
+  }, [state]);
 
   return (
     <div>
       <div className="flex justify-center mt-4">
-        <div className="max-w-md w-full">
+        <div className="max-w-md  w-full">
           <form
-            action={async (formData) => {
-              formData.append("postId", postId);
-              if (parentId) formData.append("parentId", parentId);
-              await formAction(formData);
-            }}
             className="space-y-7"
+            action={async (formData) => {
+              await formAction({ formData, postId, parentId });
+            }}
           >
-            <TextArea
-              name="text"
-              label="Comment text"
-              value={text}
-              isRequired
-              onChange={(e) => setText(e.target.value)}
-            />
-            <SubmitButton variant="primary">Confirm</SubmitButton>
+            <TextArea name="text" label="comment" isRequired />
+            <SubmitButton>confirm</SubmitButton>
           </form>
         </div>
       </div>
     </div>
   );
 }
-
 export default CommentForm;

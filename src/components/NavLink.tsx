@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 
 interface NavLinkProps {
   path: string;
   children: ReactNode;
 }
 
-function NavLink({ path, children }: NavLinkProps) {
+function NavLink({ path, children }: NavLinkProps): JSX.Element {
   const pathname = usePathname();
 
   return (

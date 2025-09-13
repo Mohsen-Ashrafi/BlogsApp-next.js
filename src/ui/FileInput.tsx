@@ -1,6 +1,3 @@
-"use client";
-import React from "react";
-import { Box, Typography, FormHelperText, FormControl } from "@mui/material";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 
 interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -12,67 +9,49 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isRequired?: boolean;
   className?: string;
   errors?: Record<string, { message?: string }>;
+  validationSchema?: Record<string, unknown>;
 }
 
-const FileInput: React.FC<FileInputProps> = ({
+function FileInput({
   label,
   name,
   value,
   onChange,
+  isRequired,
+  className,
+  validationSchema = {},
   errors,
   ...rest
-}) => {
-  const hasError = !!errors?.[name];
+}: FileInputProps) {
+  // const errorMessages = errors?.[name];
+  // const hasError = !!(errors && errorMessages);
 
   return (
-    <FormControl fullWidth error={hasError}>
-      <input
-        type="file"
-        id={name}
-        onChange={onChange}
-        style={{ display: "none" }}
-        {...rest}
-      />
-      <label htmlFor={name}>
-        <Box
-          sx={{
-            border: "2px dashed #9c27b0",
-            borderRadius: 2,
-            p: 4,
-            textAlign: "center",
-            cursor: "pointer",
-            transition: "all 0.3s",
-            "&:hover": {
-              backgroundColor: "#f3e5f5",
-            },
-          }}
-        >
-          <ArrowUpTrayIcon className="w-8 h-8 mx-auto text-purple-700" />
-          <Typography variant="body1" mt={2}>
-            {label}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Drag & drop or click to upload
-          </Typography>
-          {value && (
-            <Typography
-              variant="subtitle2"
-              color="text.primary"
-              sx={{ mt: 2, wordBreak: "break-word" }}
-            >
-              Selected file: <strong>{value}</strong>
-            </Typography>
-          )}
-        </Box>
+    <>
+      <label
+        htmlFor="file-upload"
+        className={` cursor-pointer border-2 border-primary-900
+        rounded-lg px-3 py-2 text-primary-900 flex items-center justify-center gap-x-2 ${className}`}
+      >
+        {label}
+        <ArrowUpTrayIcon className="w-5 h-5" />
+        <input
+          id="file-upload"
+          type="file"
+          className="sr-only hidden"
+          name={name}
+          value={value}
+          onChange={onChange}
+          {...rest}
+        />
       </label>
 
-      {hasError && (
-        <FormHelperText sx={{ mt: 1 }}>
-          {String(errors[name]?.message)}
-        </FormHelperText>
+      {errors && errors[name] && (
+        <span className="text-red-600 block text-xs mt-2">
+          {errors[name]?.message}
+        </span>
       )}
-    </FormControl>
+    </>
   );
-};
-
+}
 export default FileInput;

@@ -1,11 +1,10 @@
 import { useFormStatus } from "react-dom";
-import Button from "./Button";
+import Button, { ButtonProps } from "./Button";
 import SvgComponent from "./SvgComponent";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
-interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface SubmitButtonProps extends Omit<ButtonProps, "children"> {
   children: ReactNode;
-  variant: string;
 }
 
 function SubmitButton({ children, className, ...rest }: SubmitButtonProps) {
@@ -14,9 +13,7 @@ function SubmitButton({ children, className, ...rest }: SubmitButtonProps) {
     <Button
       disabled={pending}
       {...rest}
-      className={`flex items-center justify-center gap-x-4 py-4 w-full
-        ${className}
-        `}
+      className={`flex items-center justify-center gap-x-4 py-4 w-full ${className}`}
     >
       {children}
       {pending && <SvgComponent />}

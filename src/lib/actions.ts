@@ -1,48 +1,42 @@
-"use server"
+"use server";
 
-import { createCommentApi } from "@/services/commentService"
-import setCookieOnReq from "@/utils/setCookieOnReq"
-import { revalidatePath } from "next/cache"
-import { cookies } from "next/headers"
-
+import { commentApi } from "@/services/commentService";
+import { setCookieOnReq } from "@/utils/setCookieOnReq";
+import { AxiosError } from "axios";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 type StateType = {
-    error?: string;
-    message?: string;
+  error?: string;
+  message?: string;
 };
 
-
+type CreateCommentArgs = {
+  postId: string;
+  parentId?: string | null;
+  formData: FormData;
+};
 
 export async function createComment(
-    prevState: StateType,
-    formData: FormData
+  prevState: StateType,
+  { postId, parentId, formData }: CreateCommentArgs
 ): Promise<StateType> {
-    const cookieStore = await cookies()
-    const options = setCookieOnReq(cookieStore)
-
-
-    const postId = formData.get("postId") as string;
-    const parentId = formData.get("parentId") as string | null;
-    const text = formData.get("text") as string;
-
-    if (!postId || !text) {
-        return {
-            error: "Missing post ID or comment text.",
-        };
-    }
-
-
-    try {
-        const { message }: { message: string } = await createCommentApi({ postId, parentId, text }, options)
-        revalidatePath("/blogs/[slug]")
-        return {
-            message
-        }
-
-    } catch (err) {
-        const error: string = err?.response?.data?.message;
-        return {
-            error
-        }
-    }
+  const cookiesStore = await cookies();
+  const options = setCookieOnReq(cookiesStore);
+  const rawFormData = {
+    postId,
+    parentId,
+    text: formData.get("text") as string,
+  };
+  try {
+    const { message }: { message: string } = await commentApi(rawFormData, options);
+    revalidatePath("/blogs/[postSlug]");
+    return { message };
+  } catch (err) {
+    // const error = err?.respone?.data?.message;
+    const error =
+      (err as AxiosError<{ message: string }>)?.response?.data?.message ||
+      "Server error";
+    return { error };
+  }
 }

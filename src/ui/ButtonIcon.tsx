@@ -2,6 +2,12 @@ import { ButtonHTMLAttributes, JSX, ReactNode } from "react";
 
 type Variant = "primary" | "secondary" | "outline" | "red" | "danger";
 
+interface ButtonIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+  variant: Variant;
+  className?: string;
+}
+
 const btnType: Record<Variant, string> = {
   primary:
     "bg-primary-100 text-primary-700 hover:bg-primary-900 hover:text-white",
@@ -13,13 +19,13 @@ const btnType: Record<Variant, string> = {
   danger: "border border-red-100 text-red-500",
 };
 
-interface ButtonIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  variant: Variant;
-  className?: string;
-}
-
-function ButtonIcon({ children, onClick, className, variant, ...rest }:ButtonIconProps):JSX.Element {
+function ButtonIcon({
+  children,
+  onClick,
+  className,
+  variant,
+  ...rest
+}: ButtonIconProps): JSX.Element {
   return (
     <button
       onClick={onClick}

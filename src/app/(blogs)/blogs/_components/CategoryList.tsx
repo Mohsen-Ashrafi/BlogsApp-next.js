@@ -18,16 +18,17 @@ async function CategoryList(): Promise<JSX.Element> {
   const {
     data: { categories },
   }: CategoryResponse = await res.json();
-
-
   return (
     <ul className="space-y-4">
-      <Link href="/blogs">ALL</Link>
-      {categories.map((category) => {
+      <Link href={"/blogs"}>All</Link>
+      {categories.map((categorie) => {
         return (
-          <li key={category._id}>
-            <Link href={`/blogs/category/${category.slug}`}>
-              {category.title}
+          <li key={categorie._id}>
+            <Link
+              href={`/blogs/category/${categorie.slug}`}
+              className="hover:text-primary-900"
+            >
+              {categorie.title}
             </Link>
           </li>
         );
@@ -37,4 +38,3 @@ async function CategoryList(): Promise<JSX.Element> {
 }
 
 export default CategoryList;
-

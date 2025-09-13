@@ -1,122 +1,72 @@
-// import { getPostBySlug, getPosts } from "@/services/postServices";
-// import Image from "next/image";
-// import { notFound } from "next/navigation";
-// import RelatedPost from "../_components/RelatedPost";
-// import PostComment from "../_components/comment/PostComment";
-// import { Metadata } from "next";
-
-// interface Params {
-//   params: {
-//     slug: string;
-//   };
-// }
-
-// export const dynamicParams = false;
-
-// export async function generateStaticParams() {
-//   const {posts} = await getPosts();
-//   const slugs = posts.map((post) => ({ slug: post.slug }));
-//   return slugs;
-// }
-
-// export async function generateMetadata({ params }: Params): Promise<Metadata> {
-//   const post = await getPostBySlug(params.slug);
-//   return {
-//     title: `Post ${post.title}`,
-//   };
-// }
-
-// async function SinglePost({ params }: Params) {
-//   const post = await getPostBySlug(params.slug);
-
-//   if (!post) notFound();
-
-//   return (
-//     <div className="text-secondary-600 max-w-screen-md mx-auto">
-//       <h1 className="text-secondary-700 text-2xl font-bold mb-8">
-//         {post.title}
-//       </h1>
-//       <p className="mb-4">{post.briefText}</p>
-//       <p className="mb-8">{post.text}</p>
-//       <div className="relative aspect-video overflow-hidden rounded-lg mb-10">
-//         <Image
-//           className="object-cover object-center"
-//           fill
-//           src={post.coverImageUrl}
-//           alt={post.title}
-//         />
-//       </div>
-//       {post.related.length > 0 && <RelatedPost posts={post.related} />}
-//       <PostComment post={post} />
-//     </div>
-//   );
-// }
-
-// export default SinglePost;
-
-import { getPostBySlug } from "@/services/postServices";
+import { getPostSlug, getPosts } from "@/services/postServices";
 import Image from "next/image";
-import { notFound } from "next/navigation";
-import RelatedPost from "../_components/RelatedPost";
+import RelatedPosts from "../_components/RelatedPost";
 import PostComment from "../_components/comment/PostComment";
+import NotFound from "./not-found";
+import { JSX } from "react";
+import { GetPostSlugResponse, Post } from "types/ApiTypes";
 
-interface PageProps {
+interface SinglePostProps {
   params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = false;
+// export async function generateMetadata({ params }: SinglePostProps) {
+//   const post = await getPostSlug(params.postSlug);
 
-// export async function generateStaticParams() {
-//   const { posts } = await getPosts();
-//   const slugs = posts.map((post) => ({ slug: post.slug }));
-//   return slugs;
+//   return {
+//     title: `${post.title}`,
+//   };
 // }
 
-export async function generateStaticParams() {
-  try {
-    // const posts = await getPosts(); // اینو موقتاً بردار یا غیرفعال کن
-    return []; // موقت
-  } catch (error) {
-    console.error("Error in generateStaticParams:", error);
-    return [];
-  }
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: SinglePostProps) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPostSlug(slug);
+  // const post = response.post;
 
   return {
-    title: `Post - ${post.title}`,
+    title: post ? `${post.title}` : "Post not found",
   };
 }
 
-async function SinglePost({ params }: PageProps) {
-  const { slug } = await params;
-  const post = await getPostBySlug(slug);
+export async function generateStaticParams() {
+  const { posts } = await getPosts();
+  if (!posts || posts.length === 0) return [];
+  // return posts.slice(0, 2).map((post) => ({ postSlug: post.slug }));
+  return posts.slice(0, 2).map((post) => ({ slug: post.slug }));
+}
 
-  if (!post) notFound();
+async function SinglePost({ params }: SinglePostProps): Promise<JSX.Element> {
+  const { slug } = await params;
+  const post = await getPostSlug(slug);
+  // const post: Post | null = response.post;
+  
+  
+
+  // const post: GetPostSlugResponse  = await getPostSlug(slug);
+  // const { slug } = await params;
+  // const response: GetPostSlugResponse = await getPostSlug(slug);
+  // const post: Post | null = response.post;
+
+  if (!post) return NotFound();
 
   return (
     <div className="text-secondary-600 max-w-screen-md mx-auto">
       <h1 className="text-secondary-700 text-2xl font-bold mb-8">
         {post.title}
       </h1>
-      <p className="mb-4">{post.briefText}</p>
       <p className="mb-8">{post.text}</p>
       <div className="relative aspect-video overflow-hidden rounded-lg mb-10">
         <Image
-          className="object-cover object-center"
+          className="object-cover object-center hover:scale-110 transition-all ease-out duration-300"
           fill
-          src={post.coverImageUrl}
-          alt={post.title}
+          src={post?.coverImage}
+          alt={post.briefText}
         />
       </div>
-      {post.related.length > 0 && <RelatedPost posts={post.related} />}
+      {/* {post.related.length > 0 && <RelatedPosts posts={post.related} />} */}
+      {post.related && post.related.length > 0 && (
+        <RelatedPosts posts={post.related} />
+      )}
       <PostComment post={post} />
     </div>
   );

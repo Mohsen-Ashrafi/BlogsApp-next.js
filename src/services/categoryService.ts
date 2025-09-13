@@ -1,7 +1,7 @@
-import { AxiosRequestConfig } from "axios";
-import http from "./httpService";
 import { Category } from "types/ApiTypes";
+import http from "./httpService";
+// import http from "./httpService";
 
-export async function getCategoryApi(options: AxiosRequestConfig = {}): Promise<{ categories: Category[] }> {
-    return http.get(`/category/list`, options).then(({ data }) => data.data);
+export async function getCategoryApi(): Promise<Category[]> {
+  return http.get("/category/list").then(({ data }) => data.data as Category[]);
 }

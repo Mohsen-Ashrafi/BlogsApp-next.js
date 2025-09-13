@@ -1,10 +1,10 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
-type VariantType = "primary" | "secondary" | "outline" | "danger";
+export type VariantType = "primary" | "secondary" | "outline" | "danger";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variantType?: VariantType;
+  variant?: VariantType;
   className?: string;
 }
 
@@ -15,17 +15,17 @@ const btnType: Record<VariantType, string> = {
   danger: "btn--danger",
 };
 
-function CustomButton({
+function Button({
   children,
   onClick,
-  variantType = "primary",
+  variant = "primary",
   className,
   ...rest
 }: ButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`btn ${btnType[variantType]} ${className}`}
+      className={`btn ${btnType[variant]} ${className}`}
       {...rest}
     >
       {children}
@@ -33,4 +33,4 @@ function CustomButton({
   );
 }
 
-export default CustomButton;
+export default Button;

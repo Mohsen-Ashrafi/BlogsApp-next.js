@@ -1,57 +1,59 @@
+import { toShorDate } from "@/lib/toShortDate";
 import Table from "@/ui/Table";
-import { DeletePosts, UpdatePost } from "./Buttons";
+import { PostListType } from "types/ApiTypes";
+import { JSX } from "react";
+import { DeletePost, EditPost } from "./Buttons";
 
-const typeStyle = {
-  free: {
-    label: "free",
-    className: "badge--success",
-  },
-  premium: {
-    label: "paid",
-    className: "badge--secondary",
-  },
-};
-
-interface PostRowProps {
+interface TableRowProps {
+  posts: PostListType;
   index: number;
-  post: {
-    _id: string;
-    title: string;
-    category: {
-      title: string;
-    };
-    author: {
-      name: string;
-    };
-    createdAt: string;
-    type: keyof typeof typeStyle;
-  };
 }
 
-function PostRow({ index, post }: PostRowProps) {
-  const { title, category, author, createdAt, type } = post;
+function TableRow({ posts, index }: TableRowProps): JSX.Element {
+  // const { title, category, type, author, createdAt } = posts;
+  // const date = toShorDate(createdAt);
+  const title = posts.title;
+  const categoryTitle = posts.category?.title ?? "Unknown";
+  const authorName = posts.author?.name ?? "Unknown";
+  const date = posts.createdAt ? toShorDate(posts.createdAt) : "-";
+  const type = posts.type ?? "free";
+
+  const typeStyle: Record<
+    "free" | "premium",
+    { label: string; className: string }
+  > = {
+    free: {
+      label: "free",
+      className: "badge--success",
+    },
+    premium: {
+      label: "premium",
+      className: "badge--secondary",
+    },
+  };
+
   return (
     <Table.Row>
-      <td className="px-2 py-2 w-4 text-center">{index + 1}</td>
-      <td className="max-w-[100px] truncate">{title}</td>
-      <td className="max-w-[100px] truncate">{category.title}</td>
-      <td className="max-w-[100px] truncate">{author.name}</td>
-      <td className="min-w-[90px] text-nowrap">
-        {new Date(createdAt).toLocaleDateString("en-US")}
-      </td>
+      <td>{index + 1}</td>
+      <td>{title}</td>
+      {/* <td>{category.title}</td> */}
+      <td>{categoryTitle}</td>
+      {/* <td>{author.name}</td> */}
+      <td>{authorName}</td>
+      <td>{date}</td>
       <td>
         <span className={`badge ${typeStyle[type].className}`}>
           {typeStyle[type].label}
         </span>
       </td>
       <td>
-        <div className="flex items-center justify-start gap-x-3">
-          <UpdatePost id={post._id} />
-          <DeletePosts post={post} />
+        <div className="flex justify-end  gap-x-3">
+          <DeletePost post={posts} />
+          <EditPost id={posts._id} />
         </div>
       </td>
     </Table.Row>
   );
 }
 
-export default PostRow;
+export default TableRow;

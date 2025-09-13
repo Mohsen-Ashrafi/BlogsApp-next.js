@@ -1,8 +1,13 @@
 import Table from "@/ui/Table";
-import { DeleteComment, UpdateComment } from "./Buttons";
 import { CommentRowData } from "types/ApiTypes";
+import { DeleteComment, UpdateComment } from "./Buttons";
 
-const statusStyle = [
+interface StatusStyle {
+  label: string;
+  className: string;
+}
+
+const statusStyle: StatusStyle[] = [
   {
     label: "Rejected",
     className: "badge--danger",
@@ -33,8 +38,17 @@ function CommentRow({ index, comment }: CommentRowData) {
         {new Date(createdAt).toLocaleDateString("en-US")}
       </td>
       <td>
-        <span className={`badge max-w-[150px] ${statusStyle[status].className}`}>
+        {/* <span
+          className={`badge max-w-[150px] ${statusStyle[status].className}`}
+        >
           {statusStyle[status].label}
+        </span> */}
+        <span
+          className={`badge max-w-[150px] ${
+            statusStyle[Number(status)].className
+          }`}
+        >
+          {statusStyle[Number(status)].label}
         </span>
       </td>
       <td>

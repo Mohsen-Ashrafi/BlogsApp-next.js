@@ -17,9 +17,8 @@ type UpdateCommentProps = {
   comment: Comment;
 };
 
-export function DeleteComment({
-  comment: { _id: id, title },
-}: DeleteCommentProps) {
+export function DeleteComment({ comment }: DeleteCommentProps) {
+  const { _id: id, title } = comment;
   const { isDeleting, deleteComment } = useDeleteComment();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const router = useRouter();
@@ -36,7 +35,7 @@ export function DeleteComment({
       >
         <ConfirmDelete
           disabled={isDeleting}
-          resourceName={title}
+          resourceName={title || "Comment"}
           onClose={() => setIsDeleteOpen(false)}
           onConfirm={(e) => {
             e.preventDefault();
@@ -59,6 +58,7 @@ export function DeleteComment({
 export function UpdateComment({ comment }: UpdateCommentProps) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const onClose = () => setIsEditOpen(false);
+
   return (
     <>
       <ButtonIcon variant="outline" onClick={() => setIsEditOpen(true)}>
@@ -68,7 +68,6 @@ export function UpdateComment({ comment }: UpdateCommentProps) {
       <Modal title={`Edit Comment`} open={isEditOpen} onClose={onClose}>
         <EditCommentForm
           onClose={onClose}
-          // comment={comment}
           comment={{
             _id: comment._id,
             status: Number(comment.status),

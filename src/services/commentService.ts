@@ -1,42 +1,31 @@
 import { CommentPayload, CommentTypeService, CommentUpdatePayload } from "types/ApiTypes";
-import http from "./httpService";
 import { AxiosRequestConfig } from "axios";
+import http from "./httpService";
 
-export async function createCommentApi(
-    data: CommentPayload,
-    options?: AxiosRequestConfig
+export async function commentApi(
+  data: CommentPayload,
+  options?: AxiosRequestConfig
 ): Promise<{ message: string }> {
-    return http.post(`/comment/add`, data, options).then(({ data }) => data.data);
+  return http.post("/comment/add", data, options).then(({ data }) => data.data);
 }
-
-export async function getAllCommentsApi(
-    options: AxiosRequestConfig = {}
-): Promise<CommentTypeService> {
-    return http.get(`/comment/list`, options).then(({ data }) => data.data);
-}
-
 export async function deleteCommentApi(
-    { id, options }: { id: string, options?: AxiosRequestConfig }): Promise<{ message: string }> {
-    return http
-        .delete(`/comment/remove/${id}`, options)
-        .then(({ data }) => data.data);
+  { id, options }: { id: string, options?: AxiosRequestConfig }): Promise<{ message: string }> {
+  return http
+    .delete(`/comment/remove/${id}`, options)
+    .then(({ data }) => data.data);
 }
 
 export async function updateCommentApi(
-    { id, data }: CommentUpdatePayload,
-    options: AxiosRequestConfig = {}
+  { id, data }: CommentUpdatePayload,
+  options: AxiosRequestConfig = {}
 ): Promise<{ message: string }> {
-    return http
-        .patch(`/comment/update/${id}`, data, options)
-        .then(({ data }) => data.data);
+  return http
+    .patch(`/comment/update/${id}`, data, options)
+    .then(({ data }) => data.data);
 }
 
-
-const commentApi = {
-    createCommentApi,
-    getAllCommentsApi,
-    updateCommentApi,
-    deleteCommentApi
-};
-
-export default commentApi;
+export async function getAllCommentsApi(
+  option: AxiosRequestConfig = {}
+): Promise<CommentTypeService> {
+  return http.get("/comment/list", option).then(({ data }) => data.data);
+}

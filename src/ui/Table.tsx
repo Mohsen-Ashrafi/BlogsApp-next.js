@@ -5,20 +5,16 @@ interface TableProps {
   className?: string;
 }
 
-const Table: FC<TableProps> & {
+interface TableComponent extends FC<TableProps> {
   Header: FC<TableProps>;
   Body: FC<TableProps>;
   Row: FC<TableProps>;
-} = ({ children, className }) => {
+}
+
+const Table: TableComponent = ({ children }: TableProps) => {
   return (
     <div className="bg-secondary-0 overflow-x-auto">
-      <table
-        className={`min-w-full text-sm text-left border-collapse ${
-          className || ""
-        }`}
-      >
-        {children}
-      </table>
+      <table>{children}</table>
     </div>
   );
 };
@@ -28,23 +24,16 @@ export default Table;
 const TableHeader: FC<TableProps> = ({ children }) => {
   return (
     <thead>
-      <tr className="title-row bg-secondary-100 text-secondary-700 text-xs sm:text-sm uppercase tracking-wider [&>th]:text-left">
-        {children}
-      </tr>
+      <tr>{children}</tr>
     </thead>
   );
 };
 
 const TableBody: FC<TableProps> = ({ children }) => {
-  return <tbody className="divide-y divide-secondary-200">{children}</tbody>;
+  return <tbody>{children}</tbody>;
 };
-
-const TableRow: FC<TableProps> = ({ children }) => {
-  return (
-    <tr className="hover:bg-secondary-50 transition-colors duration-150 text-xs sm:text-sm whitespace-nowrap [&>td]:text-left">
-      {children}
-    </tr>
-  );
+const TableRow: FC<TableProps> = ({ children }: TableProps) => {
+  return <tr>{children}</tr>;
 };
 
 Table.Header = TableHeader;

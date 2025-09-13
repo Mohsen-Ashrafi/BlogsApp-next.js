@@ -1,17 +1,15 @@
 "use client";
-import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import ButtonIcon from "@/ui/ButtonIcon";
 import Avatar from "@/ui/Avatar";
-import { useState } from "react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import ButtonIcon from "@/ui/ButtonIcon";
 import Drawer from "@/ui/Drawer";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { JSX, useState } from "react";
 import SideBar from "./SideBar";
 
-function Header() {
+function Header({}) : JSX.Element{
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const { user, isLoading } = useAuth();
-
   return (
     <header
       className={`bg-secondary-0 ${isLoading ? "bg-opacity-30 blur-md" : ""}`}
@@ -25,12 +23,12 @@ function Header() {
           {isOpenDrawer ? <XMarkIcon /> : <Bars3Icon />}
         </ButtonIcon>
         <span className="text-sm lg:text-lg font-bold text-secondary-700">
-        Welcome, {user?.name}
+          Hi ; {user?.name}
         </span>
-        <Link href="/profile">
-          <Avatar alt="User avatar" src={user?.avatarUrl} />
-        </Link>
 
+        {/* <Link href="/profile">
+          <Avatar src={user?.avatarUrl} />
+        </Link> */}
         <Drawer open={isOpenDrawer} onClose={() => setIsOpenDrawer(false)}>
           <SideBar onClose={() => setIsOpenDrawer(false)} />
         </Drawer>

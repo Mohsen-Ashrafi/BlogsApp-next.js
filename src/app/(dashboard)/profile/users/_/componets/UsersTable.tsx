@@ -1,31 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Fallback from "@/ui/Fallback";
 import Table from "@/ui/Table";
-import Empty from "@/ui/Empty";
-import { getAllUsersApi } from "@/services/authService";
+import useGetAllUsers from "./useGetAllUsers";
 import UsersRow from "./UsersRow";
-import { User } from "types/Signup";
-import Loading from "@/ui/Loading";
 
 function UsersTable() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    getAllUsersApi()
-      .then((res) => {
-        setUsers(res.users);
-      })
-      .catch((err) => {
-        console.error("Error fetching users:", err);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) return <Loading />;
-  if (!users.length) return <Empty resourceName="users" />;
-
+  const { users, isLoading } = useGetAllUsers();
+  if (isLoading) return <Fallback />;
   return (
     <Table>
       <Table.Header>

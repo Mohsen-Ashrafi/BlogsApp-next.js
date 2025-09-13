@@ -1,11 +1,9 @@
-import MuiButton from "@/ui/MuiButton";
+import "@/styles/globals.css";
+import Button from "@/ui/Button";
 import Link from "next/link";
+import { JSX } from "react";
 
-export const metadata = {
-  title: "Home | Blog Management Web Application",
-};
-
-export default function Home() {
+function Home(): JSX.Element {
   return (
     <main
       className="relative min-h-screen bg-cover bg-center bg-no-repeat"
@@ -25,13 +23,15 @@ export default function Home() {
 
         <div className="mt-10 flex gap-6 flex-wrap justify-center">
           <Link href="/blogs">
-            <MuiButton>Read Blogs</MuiButton>
+            <Button>Read Blogs</Button>
           </Link>
           <Link href="/profile">
-            <MuiButton variant="outline">Manage Blogs</MuiButton>
+            <Button variant="outline">Manage Blogs</Button>
           </Link>
         </div>
       </div>
     </main>
   );
 }
+
+export default Home;
