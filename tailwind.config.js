@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+import tailwindFormPlugin from "@tailwindcss/forms";
+
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
@@ -9,8 +11,9 @@ function withOpacity(variableName) {
   };
 }
 
-module.exports = {
+const tailwindConfig = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: ["class", '[class="dark-mode"]'],
   theme: {
     extend: {
       colors: {
@@ -42,14 +45,25 @@ module.exports = {
         warning: withOpacity("--color-warning"),
         error: withOpacity("--color-error"),
       },
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-      },
       container: {
         center: true,
         padding: "1rem",
       },
+      fontFamily: {
+        inter: ["var(--font-inter)", "sans-serif"],
+      },
+      container:{
+        center:true,
+        padding:"1rem"
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/aspect-ratio"),
+    tailwindFormPlugin({
+      strategy: "class",
+    }),
+  ],
 };
+
+export default tailwindConfig;
