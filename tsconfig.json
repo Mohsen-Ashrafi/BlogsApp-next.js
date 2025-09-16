@@ -2,47 +2,21 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/services/*": [
-        "services/*"
-      ],
-      "@/context/*": [
-        "context/*"
-      ],
-      "@/utils/*": [
-        "utils/*"
-      ],
-      "@/providers/*": [
-        "providers/*"
-      ],
-      "@/ui/*": [
-        "ui/*"
-      ],
-      "@/lib/*": [
-        "lib/*"
-      ],
-      "@/styles/*": [
-        "styles/*"
-      ],
-      "@/constants/*": [
-        "constants/*"
-      ],
-      "@/hooks/*": [
-        "hooks/*"
-      ],
-      "@/app/*": [
-        "app/*"
-      ]
+      "@/components/*": ["components/*"],
+      "@/services/*": ["services/*"],
+      "@/context/*": ["context/*"],
+      "@/utils/*": ["utils/*"],
+      "@/providers/*": ["providers/*"],
+      "@/ui/*": ["ui/*"],
+      "@/lib/*": ["lib/*"],
+      "@/styles/*": ["styles/*"],
+      "@/constants/*": ["constants/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/app/*": ["app/*"]
     },
     "target": "esnext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -60,13 +34,11 @@
     ]
   },
   "include": [
-    "**/*.tsx",
-    ".next/types//*.ts",
-    "/*.ts",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/app/api/check-auth/route.js"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

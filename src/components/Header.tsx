@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AutchContext";
 import { useDarkMode } from "@/context/DarkModeContext";
 import {
   FaBloggerB,

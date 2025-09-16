@@ -39,10 +39,10 @@ function CreatePostForm({ postEdit }: CreatePostFormProps): JSX.Element {
     text: postEdit?.text || "",
     slug: postEdit?.slug || "",
     readingTime: postEdit?.readingTime || 0,
-    category: postEdit?.category?._id || "",
+    category: postEdit?.category?._id || categories[0]?.label,
     coverImage: postEdit?.coverImage || postEdit?.coverImageUrl || null,
   };
-
+  console.log(categories[0])
   const [imageUrl, setImageUrl] = useState<string | null>(
     typeof initialValues.coverImage === "string"
       ? initialValues.coverImage
@@ -162,7 +162,7 @@ function CreatePostForm({ postEdit }: CreatePostFormProps): JSX.Element {
           <FileInput
             {...rest}
             label="Cover Image"
-            value={typeof value === "string" ? value : value?.name ?? ""}
+            // value={typeof value === "string" ? value : value?.name ?? ""}
             onChange={(e) => {
               const file = e.target.files?.[0] ?? null;
               if (file) setImageUrl(URL.createObjectURL(file));

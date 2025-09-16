@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AutchContext";
 import Button from "@/ui/Button";
 import FormUi from "@/ui/FormUi";
 import Loading from "@/ui/Loading";

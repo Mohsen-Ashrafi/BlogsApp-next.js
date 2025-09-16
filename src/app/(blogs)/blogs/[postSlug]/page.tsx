@@ -1,13 +1,13 @@
 import { getPostSlug, getPosts } from "@/services/postServices";
 import Image from "next/image";
-import RelatedPosts from "../_components/RelatedPost";
+import { JSX } from "react";
+import { Post} from "types/ApiTypes";
+import RelatedPosts from "../_components/RelatedPosts";
 import PostComment from "../_components/comment/PostComment";
 import NotFound from "./not-found";
-import { JSX } from "react";
-import { GetPostSlugResponse, Post } from "types/ApiTypes";
 
 interface SinglePostProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ postSlug: string }>;
 }
 
 // export async function generateMetadata({ params }: SinglePostProps) {
@@ -19,9 +19,8 @@ interface SinglePostProps {
 // }
 
 export async function generateMetadata({ params }: SinglePostProps) {
-  const { slug } = await params;
-  const post = await getPostSlug(slug);
-  // const post = response.post;
+  const { postSlug } = await params;
+  const post: Post = await getPostSlug(postSlug);
 
   return {
     title: post ? `${post.title}` : "Post not found",
@@ -31,22 +30,14 @@ export async function generateMetadata({ params }: SinglePostProps) {
 export async function generateStaticParams() {
   const { posts } = await getPosts();
   if (!posts || posts.length === 0) return [];
-  // return posts.slice(0, 2).map((post) => ({ postSlug: post.slug }));
-  return posts.slice(0, 2).map((post) => ({ slug: post.slug }));
+  return posts.slice(0, 2).map((post) => ({ postSlug: post.slug }));
 }
 
 async function SinglePost({ params }: SinglePostProps): Promise<JSX.Element> {
-  const { slug } = await params;
-  const post = await getPostSlug(slug);
-  // const post: Post | null = response.post;
-  
-  
-
-  // const post: GetPostSlugResponse  = await getPostSlug(slug);
-  // const { slug } = await params;
-  // const response: GetPostSlugResponse = await getPostSlug(slug);
-  // const post: Post | null = response.post;
-
+  // const post = await getPostSlug(params.postSlug);
+  const { postSlug } = await params;
+  const post: Post = await getPostSlug(postSlug);
+  console.log(post)
   if (!post) return NotFound();
 
   return (

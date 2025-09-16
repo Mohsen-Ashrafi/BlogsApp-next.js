@@ -15,7 +15,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: "/**", 
+        pathname: "/**", // 👈 کل مسیرهای Cloudinary
       },
     ],
   },

@@ -1,5 +1,5 @@
 import inter from "@/constants/localFont";
-import AuthProvider from "@/context/AuthContext";
+import AuthProvider from "@/context/AutchContext";
 import { DarkModeProvier } from "@/context/DarkModeContext";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/styles/globals.css";
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       {/* <body className="min-h-screen"> */}
-      <body className={`min-h-screen ${inter.className}`}>
+      <body className={`min-h-screen ${inter.variable}`}>
         <DarkModeProvier>
           <Toaster />
           <ReactQueryProvider>

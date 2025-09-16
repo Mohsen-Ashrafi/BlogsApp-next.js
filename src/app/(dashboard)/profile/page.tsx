@@ -1,7 +1,7 @@
 import Fallback from "@/ui/Fallback";
 import { JSX, Suspense } from "react";
 import CardWrapper from "./_components/CardsWrapper";
-import LatestPost from "./_components/LatestPosts";
+import LatestPost from "./_components/LatestPost";
 
 async function Profile(): Promise<JSX.Element> {
   return (

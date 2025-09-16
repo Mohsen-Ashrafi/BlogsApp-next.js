@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AutchContext";
 import Avatar from "@/ui/Avatar";
 import ButtonIcon from "@/ui/ButtonIcon";
 import Drawer from "@/ui/Drawer";
@@ -7,7 +7,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { JSX, useState } from "react";
 import SideBar from "./SideBar";
 
-function Header({}) : JSX.Element{
+function Header({}): JSX.Element {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const { user, isLoading } = useAuth();
   return (

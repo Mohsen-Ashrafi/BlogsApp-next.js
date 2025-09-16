@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AutchContext";
 import ButtonIcon from "@/ui/ButtonIcon";
 import {
   ArrowLeftStartOnRectangleIcon,
@@ -10,7 +10,6 @@ import {
 import Link from "next/link";
 import toast from "react-hot-toast";
 import SideBarNavs from "./SideBarNavs";
-
 
 interface SideBarProps {
   onClose?: () => void;

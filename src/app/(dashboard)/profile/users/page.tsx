@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import UsersTable from "./_/componets/UsersTable"
+import UsersTable from "./_/UserTable";
 
 export default function CategoryPage(): JSX.Element {
   return (

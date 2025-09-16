@@ -1,4 +1,10 @@
-import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 
 const { default: axios } = require("axios");
 
@@ -27,7 +33,9 @@ app.interceptors.request.use(
 app.interceptors.response.use(
   (res: AxiosResponse) => res,
   async (err: AxiosError) => {
-    const originalConfig = err.config as AxiosRequestConfig & { _retry?: boolean };
+    const originalConfig = err.config as AxiosRequestConfig & {
+      _retry?: boolean;
+    };
     if (err.response?.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true;
       try {

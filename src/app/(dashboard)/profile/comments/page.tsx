@@ -1,6 +1,6 @@
 import Fallback from "@/ui/Fallback";
 import { JSX, Suspense } from "react";
-import CommentsTable from "./_/components/CommentsTable"
+import CommentsTable from "./_/components/CommentTable";
 
 async function CommentPage(): Promise<JSX.Element> {
   return (
