@@ -16,8 +16,8 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      {/* <body className="min-h-screen"> */}
-      <body className={`min-h-screen ${inter.variable}`}>
+      <body className={`${inter.className} min-h-screen font-sans`}>
+        {/* <body className={`min-h-screen ${inter.variable}`}> */}
         <DarkModeProvier>
           <Toaster />
           <ReactQueryProvider>
