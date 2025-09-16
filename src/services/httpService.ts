@@ -9,7 +9,7 @@ import {
 const { default: axios } = require("axios");
 
 const app: AxiosInstance = axios.create({
-  baseURL: "https://blog-app-backend-iuxu.onrender.com/api",
+  baseURL: "https://api.myblog-app.online/api",
   withCredentials: true,
 });
 
