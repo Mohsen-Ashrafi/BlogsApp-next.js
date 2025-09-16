@@ -162,7 +162,6 @@ function CreatePostForm({ postEdit }: CreatePostFormProps): JSX.Element {
           <FileInput
             {...rest}
             label="Cover Image"
-            // value={typeof value === "string" ? value : value?.name ?? ""}
             onChange={(e) => {
               const file = e.target.files?.[0] ?? null;
               if (file) setImageUrl(URL.createObjectURL(file));
@@ -173,26 +172,30 @@ function CreatePostForm({ postEdit }: CreatePostFormProps): JSX.Element {
         )}
       />
 
-      {imageUrl && (
-        <div className="relative aspect-video overflow-hidden rounded-lg">
-          <Image
-            fill
-            alt="cover-image"
-            src={imageUrl}
-            className="object-cover object-center"
-          />
-          <ButtonIcon
-            onClick={() => {
-              setImageUrl(null);
-              setValue("coverImage", null);
-            }}
-            variant="red"
-            className="w-6 h-6 absolute left-4 top-4"
-          >
-            <XMarkIcon />
-          </ButtonIcon>
-        </div>
-      )}
+{imageUrl && (
+  <div className="relative w-full h-[250px] overflow-hidden rounded-lg mb-10">
+    <Image
+      src={imageUrl}
+      alt="cover-image"
+      fill
+      className="object-cover object-center"
+      sizes="(max-width: 1920px) 100vw, (max-width: 1920px) 50vw, 1920px"
+      unoptimized={!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://")}
+    />
+    <ButtonIcon
+      onClick={() => {
+        setImageUrl(null);
+        setValue("coverImage", null);
+      }}
+      variant="red"
+      className="w-6 h-6 absolute left-4 top-4"
+    >
+      <XMarkIcon />
+    </ButtonIcon>
+  </div>
+)}
+
+
 
       <div>
         {isCreating || isCompressing ? (
